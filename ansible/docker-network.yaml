@@ -1,0 +1,15 @@
+---
+ - name: Disable disable
+   hosts: ops
+   tasks:
+   - debug:
+       msg: "Working on Hostname:{ {{ inventory_hostname }} } Distribution:{ {{ ansible_distribution }} {{ ansible_distribution_version }} } Operation Time:{ {{ ansible_date_time.date }} {{ ansible_date_time.time }} {{ ansible_date_time.tz }} }"
+   - debug:
+       msg: "Hostname:{ {{ inventory_hostname }} } IPAddr:{ {{ ansible_all_ipv4_addresses }} } Gateway:{ {{ ansible_default_ipv4.gateway }} }"
+     when:
+       - ansible_default_ipv4.gateway is defined
+       - ansible_all_ipv4_addresses is defined
+       
+   - name: Create a network
+     community.docker.docker_network:
+      name: monitor

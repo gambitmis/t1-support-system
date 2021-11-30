@@ -1,0 +1,25 @@
+---
+ - name: Upgrade all package to lastet version
+   hosts: ops
+   tasks:
+
+     - debug:
+         msg: "Working on Hostname:{ {{ inventory_hostname }} } Distribution:{ {{ ansible_distribution }} {{ ansible_distribution_version }} } Operation Time:{ {{ ansible_date_time.date }} {{ ansible_date_time.time }} {{ ansible_date_time.tz }} }"
+     - debug:
+         msg: "Hostname:{ {{ inventory_hostname }} } IPAddr:{ {{ ansible_all_ipv4_addresses }} } Gateway:{ {{ ansible_default_ipv4.gateway }} }"
+       when:
+        - ansible_default_ipv4.gateway is defined
+        - ansible_all_ipv4_addresses is defined
+
+     - name: apt update
+       apt:
+         upgrade: dist
+       when: ( ansible_distribution == "Ubuntu" and ansible_distribution_version == "20.04" ) or
+             ( ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04")
+             
+     - name: apt upgrade
+       apt:
+         name: "*"
+         state: lastest
+       when: ( ansible_distribution == "Ubuntu" and ansible_distribution_version == "20.04" ) or
+             ( ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04")
