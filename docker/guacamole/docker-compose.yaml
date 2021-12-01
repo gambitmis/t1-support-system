@@ -1,6 +1,3 @@
-#docker run --name some-guacd -d -p 4822:4822 guacamole/guacd
-#docker run --name some-guacamole --link some-guacd:guacd  -d -p 8080:8080 guacamole/guacamole
-#docker run --name some-guacamole --link some-guacd:guacd --link some-mysql:mysql -d -p 8080:8080 guacamole/guacamole
 version: '3'
 services:
   guacd:
