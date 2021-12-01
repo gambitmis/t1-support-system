@@ -1,0 +1,63 @@
+#docker run --name some-guacd -d -p 4822:4822 guacamole/guacd
+#docker run --name some-guacamole --link some-guacd:guacd  -d -p 8080:8080 guacamole/guacamole
+#docker run --name some-guacamole --link some-guacd:guacd --link some-mysql:mysql -d -p 8080:8080 guacamole/guacamole
+version: '3'
+services:
+  guacd:
+    image: guacamole/guacd
+    restart: always
+    ports:
+      - 4822:4822
+    networks:
+      - workload
+    logging:
+      driver: "loki"
+      options:
+         loki-url: "http://192.168.62.42:3100/loki/api/v1/push"
+  guacamole:
+    image: guacamole/guacamole
+    restart: always
+    environment:
+      GUACD_HOSTNAME: guacd
+      GUACD_PORT: 4822
+      MYSQL_HOSTNAME: db
+      MYSQL_DATABASE: guacamole
+      MYSQL_USER: dbadmin
+      MYSQL_PASSWORD: P@ssw0rd
+    ports:
+      - 8080:8080
+    networks:
+      - workload
+    logging:
+      driver: "loki"
+      options:
+         loki-url: "http://192.168.62.42:3100/loki/api/v1/push"
+    links:
+      - "guacd"
+      - "db"
+  db:
+    image: mariadb
+    restart: always
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    environment:
+      MARIADB_ROOT_PASSWORD: P@ssw0rd
+      MARIADB_USER: dbadmin
+      MARIADB_PASSWORD: P@ssw0rd
+      MARIADB_DATABASE: guacamole
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./schema:/docker-entrypoint-initdb.d
+    networks:
+      - workload
+    expose:
+      - 3306
+    logging:
+      driver: "loki"
+      options:
+         loki-url: "http://192.168.62.42:3100/loki/api/v1/push"
+volumes:
+  db_data: 
+
+networks:
+  workload:
+    external: true

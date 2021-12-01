@@ -1,7 +1,8 @@
 version: "3"
 
 networks:
-  monitor:
+  operation:
+    external: true
 
 services:
   loki:
@@ -10,19 +11,23 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     networks:
-      - monitor
+      - operation
 
   promtail:
     image: grafana/promtail:2.4.0
     volumes:
       - /var/log:/var/log
+      #- /var/docker-log:/var/docker-log
+      - ${PWD}/config.yaml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
+    ports:
+      - "1514:1514"
     networks:
-      - monitor
+      - operation
 
   grafana:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
     networks:
-      - monitor
+      - operation
