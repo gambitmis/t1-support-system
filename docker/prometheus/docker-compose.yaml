@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+    prometheus:
+        ports:
+            - '9090:9090'
+        volumes:
+            - ${PWD}/config.yaml:/etc/prometheus/prometheus.yml
+        container_name: prometheus
+        image: prom/prometheus
