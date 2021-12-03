@@ -1,6 +1,6 @@
 ---
   - name: Install Docker Engine https://docs.docker.com/engine/install/
-    hosts: ops
+    hosts: docker
     tasks:
 
     - debug:

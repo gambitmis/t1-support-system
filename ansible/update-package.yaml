@@ -1,6 +1,6 @@
 ---
  - name: Upgrade all package to lastet version
-   hosts: ops
+   hosts: update
    tasks:
 
      - debug:
@@ -20,6 +20,6 @@
      - name: apt upgrade
        apt:
          name: "*"
-         state: lastest
+         state: latest
        when: ( ansible_distribution == "Ubuntu" and ansible_distribution_version == "20.04" ) or
              ( ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04")

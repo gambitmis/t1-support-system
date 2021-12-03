@@ -1,7 +1,23 @@
 # t1-support-system
 setup system for tier-1 support
 
-## Password for new users
+## STEP 1: Update Package and Upgrade
+``` console 
+ansible-playbook ansible/update-package.yaml
+```
+
+## STEP 2: Disable IPv6
+``` console 
+ansible-playbook ansible/disable-ipv6.yaml 
+```
+
+## STEP 3: Install Docker
+``` console 
+ansible-playbook ansible/disable-ipv6.yaml 
+```
+
+## STEP 4: Add Support User
+### Password for new users
 ``` python
 python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt.crypt(pw) if (pw==getpass.getpass("Confirm: ")) else exit())'
 ```
@@ -11,6 +27,9 @@ Password:
 Confirm: 
 $6$/1OFlW9yH1KHHiOm$pn2SfNgbF/rbblahjseab/p1Xb6Z29UZik.BUilZ.TLnp9yvl2HViB3fs8XdVteboeioss7o2A4g1IYxw.TFJ/
 ```
+### update on ansible 
+
+
 ## container network policy 
 ``` console
 docker network create operation --subnet=172.20.0.0/24
