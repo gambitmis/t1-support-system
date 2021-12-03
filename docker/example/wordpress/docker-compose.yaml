@@ -16,6 +16,10 @@ services:
     expose:
       - 3306
       - 33060
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
   wordpress:
     image: wordpress:latest
     ports:
@@ -26,6 +30,10 @@ services:
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=wordpress
       - WORDPRESS_DB_NAME=wordpress
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
 volumes:
   db_data:
 
