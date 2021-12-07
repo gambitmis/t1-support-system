@@ -10,27 +10,107 @@ scrape_configs:
 
     static_configs:
 
-    - targets: ['192.168.62.42:9090']
+    - targets: ['support:9090']
 
       labels:
 
         alias: 'prometheus'
 
-  - job_name: 'cadvisor'
+  - job_name: 'cadvisor-support'
 
     static_configs:
 
-    - targets: ['192.168.62.42:8088']
+    - targets: ['support:8088']
 
       labels:
 
         alias: 'cadvisor'
 
-  - job_name: 'node-exporter'
+  - job_name: 'node-exporter-support'
 
     static_configs:
 
-    - targets: ['192.168.62.42:9100']
+    - targets: ['support:9100']
+
+      labels:
+
+        alias: 'node-exporter'
+
+  - job_name: 'cadvisor-api'
+
+    static_configs:
+
+    - targets: ['api:8088']
+
+      labels:
+
+        alias: 'cadvisor'
+
+  - job_name: 'node-exporter-api'
+
+    static_configs:
+
+    - targets: ['api:9100']
+
+      labels:
+
+        alias: 'node-exporter'
+
+  - job_name: 'cadvisor-telemetry'
+
+    static_configs:
+
+    - targets: ['telemetry:8088']
+
+      labels:
+
+        alias: 'cadvisor'
+
+  - job_name: 'node-exporter-telemetry'
+
+    static_configs:
+
+    - targets: ['telemetry:9100']
+
+      labels:
+
+        alias: 'node-exporter'
+
+  - job_name: 'cadvisor-tendermint'
+
+    static_configs:
+
+    - targets: ['tendermint:8088']
+
+      labels:
+
+        alias: 'cadvisor'
+
+  - job_name: 'node-exporter-tendermint'
+
+    static_configs:
+
+    - targets: ['tendermint:9100']
+
+      labels:
+
+        alias: 'node-exporter'
+
+  - job_name: 'cadvisor-zeromq'
+
+    static_configs:
+
+    - targets: ['zeromq:8088']
+
+      labels:
+
+        alias: 'cadvisor'
+
+  - job_name: 'node-exporter-zeromq'
+
+    static_configs:
+
+    - targets: ['zeromq:9100']
 
       labels:
 

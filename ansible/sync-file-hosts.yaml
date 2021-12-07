@@ -1,5 +1,5 @@
 ---
- - name: Disable disable
+ - name: sync hosts to all in cluster
    hosts: ops
    tasks:
    - debug:
@@ -9,7 +9,11 @@
      when:
        - ansible_default_ipv4.gateway is defined
        - ansible_all_ipv4_addresses is defined
-       
-   - name: Create a network
-     community.docker.docker_network:
-      name: monitor
+  
+   - name: Copy file host
+     copy:
+       src: /etc/hosts
+       dest: /etc/hosts
+       owner: root
+       group: root
+       mode: '0644'
