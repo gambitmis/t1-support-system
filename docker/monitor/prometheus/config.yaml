@@ -10,7 +10,7 @@ scrape_configs:
 
     static_configs:
 
-    - targets: ['192.168.62.42:9090']
+    - targets: ['192.168.xx.xx:9090']
 
       labels:
 
@@ -20,7 +20,7 @@ scrape_configs:
 
     static_configs:
 
-    - targets: ['192.168.62.42:8088']
+    - targets: ['192.168.xx.xx:8088']
 
       labels:
 
@@ -30,7 +30,7 @@ scrape_configs:
 
     static_configs:
 
-    - targets: ['192.168.62.42:9100']
+    - targets: ['192.168.xx.xx:9100']
 
       labels:
 
