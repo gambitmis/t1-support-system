@@ -19,7 +19,7 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
   node-exporter:
     image: prom/node-exporter
@@ -30,7 +30,7 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
 
   
