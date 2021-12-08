@@ -7,6 +7,7 @@ networks:
 services:
   loki:
     image: grafana/loki:2.4.0
+    restart: unless-stopped
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
@@ -15,10 +16,11 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
   promtail:
     image: grafana/promtail:2.4.0
+    restart: unless-stopped
     volumes:
       - /var/log:/var/log
       - ${PWD}/loki/config.yaml:/etc/promtail/config.yml
@@ -30,10 +32,11 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
   grafana:
     image: grafana/grafana:latest
+    restart: unless-stopped
     ports:
       - "3000:3000"
     networks:
@@ -41,10 +44,11 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
   cadvisor:
     image: 'google/cadvisor:latest'
+    restart: unless-stopped
     volumes:
       - '/:/rootfs:ro'
       - '/var/run:/var/run:rw'
@@ -57,10 +61,11 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
   node-exporter:
     image: prom/node-exporter
+    restart: unless-stopped
     ports:
       - '9100:9100'
     networks:
@@ -68,10 +73,11 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
   prometheus:
     image: prom/prometheus
+    restart: unless-stopped
     volumes:
       - ${PWD}/prometheus/config.yaml:/etc/prometheus/prometheus.yml
     ports:
@@ -81,7 +87,7 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://192.168.78.32:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
   
 

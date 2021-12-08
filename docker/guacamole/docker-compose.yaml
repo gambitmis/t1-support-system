@@ -2,18 +2,18 @@ version: '3'
 services:
   guacd:
     image: guacamole/guacd
-    restart: always
+    restart: unless-stopped
     ports:
       - 4822:4822
     networks:
-      - workload
+      - operation
     logging:
       driver: "loki"
       options:
-         loki-url: "http://192.168.62.42:3100/loki/api/v1/push"
+         loki-url: "http://support:3100/loki/api/v1/push"
   guacamole:
     image: guacamole/guacamole
-    restart: always
+    restart: unless-stopped
     environment:
       GUACD_HOSTNAME: guacd
       GUACD_PORT: 4822
@@ -24,17 +24,17 @@ services:
     ports:
       - 8080:8080
     networks:
-      - workload
+      - operation
     logging:
       driver: "loki"
       options:
-         loki-url: "http://192.168.62.42:3100/loki/api/v1/push"
+         loki-url: "http://support:3100/loki/api/v1/push"
     links:
       - "guacd"
       - "db"
   db:
     image: mariadb
-    restart: always
+    restart: unless-stopped
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     environment:
       MARIADB_ROOT_PASSWORD: P@ssw0rd
@@ -45,32 +45,33 @@ services:
       - db_data:/var/lib/mysql
       - ./schema:/docker-entrypoint-initdb.d
     networks:
-      - workload
+      - operation
     expose:
       - 3306
     logging:
       driver: "loki"
       options:
-         loki-url: "http://192.168.62.42:3100/loki/api/v1/push"
+         loki-url: "http://support:3100/loki/api/v1/push"
 
   phpmyadmin:
     image: phpmyadmin
+    restart: unless-stopped
     environment:
       - PMA_HOSTS=db
     ports:
       - 8866:80
     networks:
-      - workload
+      - operation
     links:
       - "db"
     logging:
       driver: "loki"
       options:
-        loki-url: "http://192.168.62.42:3100/loki/api/v1/push"
+        loki-url: "http://support:3100/loki/api/v1/push"
 
 volumes:
   db_data: 
 
 networks:
-  workload:
+  operation:
     external: true
