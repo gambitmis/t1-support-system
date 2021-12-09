@@ -53,7 +53,5 @@ services:
         loki-url: "https://<user_id>:<password>@logs-prod-us-central1.grafana.net/loki/api/v1/push"
 ```
 
-Verifying the Guacamole install
-Once the Guacamole image is running, Guacamole should be accessible at http://HOSTNAME:8080/guacamole/, where HOSTNAME is the hostname or address of the machine hosting Docker, and you should a login screen. If using MySQL or PostgreSQL, the database initialization scripts will have created a default administrative user called "guacadmin" with the password "guacadmin". You should log in and change your password immediately. If using LDAP, you should be able to log in as any valid user within your LDAP directory.
-
-If you cannot access Guacamole, or you do not see a login screen, check Docker's logs using the docker logs command to determine if something is wrong. Configuration parameters may have been given incorrectly, or the database may be improperly initialized:
+http://HOSTNAME:8080/guacamole/
+default administrative user called "guacadmin" with the password "guacadmin"
